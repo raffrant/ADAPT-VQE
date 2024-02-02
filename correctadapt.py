@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import functools as ft
 from scipy.optimize import minimize
 import itertools
+import scipy
 def szall(N):                            #generate sz single operators ZI....I,IZI...I,IIZI...I,...,I...IZI,I....IZ
     szall=[[] for i in range(N)]
     szoper=np.array([[1,0],[0,-1]],dtype=complex)
@@ -98,6 +99,7 @@ def allpauli(n):
    yall=[ft.reduce(np.kron,y1[i]) for i in range(len(y1))]
 
    return yall,pstringpau
+
 N=8
 sxop=sxall(N)
 syop=syall(N)
@@ -197,6 +199,7 @@ while asf-w[0]>10**(-12) and kit<30:
  kit+=1
  ende.append(abs(asf-w[0]))
  enall.append(asf)
+
 fig=plt.figure() 
 ax=plt.axes()
 ax.scatter(range(kit),ende,color='g')
