@@ -111,7 +111,7 @@ ps,pastring=pool(N,sxop,syop,szop)
 print(len(ps))
 def uall(yx,psall):                     #apply operators one by one.
    uop=[]
-   for ia in range(len(yx)):
+   for ia in reversed(range(len(yx))):
       uop.append(expm1(psall[ia],-yx[ia],N))
    if len(yx)==1:
       y=uop[0]
@@ -169,7 +169,7 @@ while asf-w[0]>10**(-12) and kit<30:
      psalla.append(ps1)
      indall.append(ind1)
     else:
-       grss=gradient(ps,np.linalg.multi_dot([expm1(psalla[i],-xparameters[i],N) for i in range(len(psalla))]).dot(ins),h)
+       grss=gradient(ps,np.linalg.multi_dot([expm1(psalla[i],-xparameters[i],N) for i in reversed(range(len(psalla)))]).dot(ins),h)
        max1,ind1,ps1=maxgr(ps,grss)
        psalla.append(ps1)
        indall.append(ind1) 
