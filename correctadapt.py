@@ -2,10 +2,13 @@ import matplotlib
 import sys 
 import numpy as np
 import matplotlib.pyplot as plt
+import copy
 import functools as ft
 from scipy.optimize import minimize
 import itertools
 import scipy
+import jax.numpy as jnp
+from jax import jit, value_and_grad
 def szall(N):                            #generate sz single operators ZI....I,IZI...I,IIZI...I,...,I...IZI,I....IZ
     szall=[[] for i in range(N)]
     szoper=np.array([[1,0],[0,-1]],dtype=complex)
@@ -64,7 +67,7 @@ def initial(array):
     return np.array((tensorized[0]).flatten()) 
 
 def expm1(a,th,n):
-   return np.cos(th)*np.eye(2**n,dtype=complex)-1j*np.sin(th)*a
+   return jnp.cos(th)*jnp.eye(2**n,dtype=complex)-1j*jnp.sin(th)*a
 
 
 def pool(N,sx,sy,sz):
@@ -118,7 +121,7 @@ def uall(yx,psall):                     #apply operators one by one.
    if len(yx)==1:
       y=uop[0]
    else:
-      y=np.linalg.multi_dot(uop)
+      y=jnp.linalg.multi_dot(uop)
    return y
 
 def gradient(psaa,isa,hami):           #calculate all gradients for operators
@@ -171,17 +174,16 @@ while asf-w[0]>10**(-12) and kit<30:
      psalla.append(ps1)
      indall.append(ind1)
     else:
-       grss=gradient(ps,np.linalg.multi_dot([expm1(psalla[i],-xparameters[i],N) for i in reversed(range(len(psalla)))]).dot(ins),h)
+       grss=gradient(ps,jnp.linalg.multi_dot([expm1(psalla[i],-xparameters[i],N) for i in reversed(range(len(psalla)))]).dot(ins),h)
        max1,ind1,ps1=maxgr(ps,grss)
        psalla.append(ps1)
        indall.append(ind1) 
  def fun(x):
    global psalla
    u1=uall([x[i] for i in range(len(psalla))],psalla)
-   psitel=u1.dot(ins)
-   return np.real(np.vdot(psitel,h.dot(psitel)))
-
-
+   psitel=jnp.dot(u1,ins)
+   return np.real(jnp.vdot(psitel,jnp.dot(h,psitel)))
+ obj_and_grad = jit(value_and_grad(fun))
  if kit==0:
     xa=[0]
  else:
@@ -191,7 +193,7 @@ while asf-w[0]>10**(-12) and kit<30:
        xa.append(xparameters[ka])
     xa.append(0)   
  print(np.var(grss),pastring[ind1],ind1)
- yall1=minimize(fun,x0=xa,method='BFGS',options={'gtol':10**(-10)})
+ yall1=minimize(obj_and_grad,x0=xa,method='BFGS',options={'gtol':10**(-15)},jac=True)
  asf=yall1.fun
  xparameters=yall1.x
  print(asf,w[0],asf-w[0],kit)
