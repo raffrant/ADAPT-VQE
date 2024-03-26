@@ -1,7 +1,7 @@
 
 import matplotlib
 import sys 
-sys.path.append("C:/Users/rfrantzesk/Desktop/physics/qisadapt")
+sys.path.append("Path for the data of the Hamiltonian of H4 after JW transformation")
 import dataforadapt 
 import numpy as np
 import matplotlib.pyplot as plt
