@@ -1,4 +1,4 @@
-'''
+
 import matplotlib
 import sys 
 sys.path.append("C:/Users/rfrantzesk/Desktop/physics/qisadapt")
@@ -75,7 +75,7 @@ def expm1(a,th,n):
    return jnp.cos(th)*jnp.eye(2**n,dtype=complex)-1j*jnp.sin(th)*a
 
 
-def pool(N,sx,sy,sz):
+def pool(N,sx,sy,sz):   #XY, XYYY pool for our problem
    po=[]
    pa=[]
    for i in range(N):
@@ -94,7 +94,7 @@ def pool(N,sx,sy,sz):
 
    return po,pa
 
-def allpauli(n):
+def allpauli(n):        #all pauli operator pool in case we want to use it
    ide=np.eye(2)
    sx1=np.array([[0,1],[1,0]])
    sy1=np.array([[0,-1j],[1j,0]])
@@ -111,11 +111,10 @@ N=8
 sxop=sxall(N)
 syop=syall(N)
 szop=szall(N)
-h=dataforadapt.h4closedfermion()
+h=dataforadapt.h4closedfermion() #hamiltonian of h4 closed molecule in XY plane.
 w,e=np.linalg.eigh(h)
-ins=initial([1,1,1,1,0,0,0,0])
+ins=initial([1,1,1,1,0,0,0,0])  #HF initial state
 ps,pastring=pool(N,sxop,syop,szop)
-#allpauli(8)#pool(N,sxop,syop,szop)#dataforadapt.pomafalda()
 print(np.vdot(ins,h.dot(ins)))
 def uall(yx,psall):                     #apply operators one by one.
    uop=[]
@@ -131,18 +130,7 @@ def gradient(psaa,isa,hami):           #calculate all gradients for operators
  grall=[]
  for i in range(len(psaa)):
    hc=hami.dot(psaa[i])-psaa[i].dot(hami)
-   grall.append(np.vdot(isa,hc.dot(isa))) 
- #vva=[]
- #bv1=sorted(map(abs,grall))
- #k=1
- #for j in range(len(grall)):
- #     if np.allclose(grall[j],bv1[-1]):  
- #       vva.append(j)
- #print(vv)       
- #if len(vva)>0:
- # for i in range(len(vva)):
- #   del grall[vva[i]]
- #   del ps[vva[i]]      
+   grall.append(np.vdot(isa,hc.dot(isa)))  
  return grall  
 
 def maxgr(psbv,grelements):          #choose max gradient
@@ -158,7 +146,6 @@ psalla=[]
 indall=[]
 asf=100   #initial random value for the energy
 kit=0    # of iterations
-enall=[]
 fid=[]
 ende=[]
 psitel2=ins
@@ -196,7 +183,7 @@ while asf-w[0]>10**(-7):
        xa.append(xparameters[ka])
     xa.append(0)   
  print(np.var(grss),pastring[ind1],ind1)
- with open("C:/Users/rfrantzesk/Desktop/h4closed/dataforh4cop1.txt", "a") as text_file:
+ with open("path to store the operators in the state preparation step by step", "a") as text_file:
     text_file.write("%s" % pastring[ind1]+ "\n")
  opeforadapt.append(pastring[ind1])
  yall1=minimize(obj_and_grad,x0=xa,method='BFGS',options={'gtol':10**(-15)},jac=True)
@@ -210,8 +197,7 @@ while asf-w[0]>10**(-7):
  kit+=1
  ende.append(abs(asf-w[0]))
  fid.append(1-abs(np.vdot(e[:,0],psitel2))**2)
- enall.append(asf)
-np.savetxt('C:/Users/rfrantzesk/Desktop/h4closed/dataforh4c1.txt', xparameters, delimiter =',') 
+np.savetxt('Path to store the parameters', xparameters, delimiter =',') 
 
 fig=plt.figure() 
 ax=plt.axes()
@@ -231,75 +217,5 @@ ax2.set_ylabel('Infidelity')
 
 plt.show()  
 
-'''
 
 
-import matplotlib.pyplot as plt
-
-xa=[-0.5366256141729487,-0.9976790676696753,-0.9652064293384311,-0.899986825440588]
-ya=[-0.843820449037297,-0.06809168769950984,0.2614890987474549,-0.4359170953671956]
-
-
-xaa=[0.8394281457604458,-0.9970544792575406,0.02355089162352802,0.8286358041286458]
-yaa=[-0.5434706874387797,-0.07669658005722525,0.9997226392873859,-0.5597880885800203]
-
-xaa2=[0.995503922315496,-0.9656038827294239,0.11301213321542347,-0.7232197271945006]
-yaa2=[-0.09472032862307316,0.26001757951696447,-0.9935936079434586,-0.6906180030933975]
-
-fig=plt.figure(1,figsize=(5,5))
-ax1=plt.axes()
-ax1.scatter([xa],[ya])
-
-fig2=plt.figure(2,figsize=(5,5))
-ax2=plt.axes()
-ax2.scatter([xaa],[yaa])
-
-
-fig3=plt.figure(3,figsize=(5,5))
-ax3=plt.axes()
-ax3.scatter([xaa2],[yaa2])
-plt.show()
-
-
-'''
-
-aa=np.random.uniform(low=0,high=2*np.pi,size=4)
-import cmath
-
-vb=list(cmath.rect(1,aa[i]) for i in range(len(aa)))
-
-#fig,ax=plt.subplot()
-for i in range(len(vb)):
-   print(vb[i].real)
-   print(vb[i].imag)
-
-#vc=
-   
-#-0.5366256141729487                      
-#-0.843820449037297 
-#-0.9976790676696753
-#-0.06809168769950984
-#-0.9652064293384311
-#0.2614890987474549
-#-0.899986825440588
-#-0.4359170953671956   
-   
-#0.8394281457604458
-#-0.5434706874387797
-#-0.9970544792575406
-#-0.07669658005722525
-#0.02355089162352802
-#0.9997226392873859
-#0.8286358041286458
-#-0.5597880885800203
-
-
-#0.995503922315496
-#-0.09472032862307316
-#-0.9656038827294239
-#0.26001757951696447
-#0.11301213321542347
-#-0.9935936079434586
-#-0.7232197271945006
-#-0.6906180030933975
-'''
