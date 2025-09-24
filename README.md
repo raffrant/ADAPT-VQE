@@ -1,6 +1,6 @@
 ⚛️ ADAPT-VQE with JAX
 
-A minimal implementation of the ADAPT-VQE algorithm for preparing the ground state of the hydrogen chain H₄ using \url{https://github.com/google/jax}{JAX}
+A minimal implementation of the ADAPT-VQE algorithm for preparing the ground state of the hydrogen chain H₄ using JAX, https://github.com/google/jax
 This project demonstrates how the Adaptive Variational Quantum Eigensolver (ADAPT-VQE) can be used to estimate molecular energies efficiently by iteratively constructing an ansatz.
 
 ✨ Features
