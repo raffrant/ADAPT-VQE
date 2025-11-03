@@ -26,11 +26,6 @@ In this code, we prepare the ground state of H₄ and estimate the total electro
 ✅ Ansatz growth: gradient-based operator selection
 ✅ Energy convergence tracked with ΔE
 
-⚡ Installation
-git clone https://github.com/raffrant/ADAPT-VQE.git
-cd adapt-vqe-h4
-pip install -r requirements.txt
-
 📚 References
   Grimsley, H. R., et al. “An adaptive variational algorithm for exact molecular simulations on a quantum computer.” Nature Communications 10, 3007 (2019).
   Peruzzo, A., et al. “A variational eigenvalue solver on a photonic quantum processor.” Nature Communications 5, 4213 (2014).
