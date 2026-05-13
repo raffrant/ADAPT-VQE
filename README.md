@@ -15,7 +15,8 @@
 
 ## What is this?
 
-This repository implements the **ADAPT-VQE** algorithm to find the ground-state energy and wavefunction of a **hydrogen chain H₄** molecule (8 qubits after Jordan–Wigner transformation). It uses **JAX** for JIT-compiled matrix exponentials and automatic differentiation, combined with **BFGS** optimization from SciPy.
+This repository implements the **ADAPT-VQE** algorithm to find the ground-state energy and wavefunction of a **hydrogen chain H₄** molecule (8 qubits after Jordan–Wigner transformation). It uses **JAX** for JIT-compiled matrix exponentials and automatic differentiation, combined with **BFGS** optimization from SciPy and built overnight.
+
 
 The key idea of ADAPT-VQE over standard VQE: instead of committing to a fixed ansatz, the circuit grows **one operator at a time**, always picking the operator with the largest energy gradient. This produces compact, chemically informed ansätze with far fewer parameters — ideal for near-term (NISQ) devices.
 
