@@ -14,7 +14,7 @@ Quantum_vqe_and_ml/
 │   ├── h4closed.py
 │   ├── h4closedfigure.jpg
 │   └── ...
-├── machine_learning/
+├── mlandgraphstates/
 │   ├── mlandsectorlengths.py
 │   ├── sectorlengths.py
 │   ├── graph_state_notebook.ipynb
@@ -36,19 +36,13 @@ The machine-learning side of the repository studies weighted graph states on sma
 
 The notebook `graph_state_notebook.ipynb` is the exploratory front end for this workflow: it generates datasets, inspects fidelity and sector-length distributions, evaluates ML metrics, and visualizes the best raw and ML-ranked protocols. The uploaded notebook output shows a representative dataset with 6000 protocol rows and reports example model metrics including sector-length regression, fidelity regression, and good-output classification. [3]
 
-## Why these projects fit together
-
-Although the repository has two distinct folders, both parts are connected by the broader theme of **efficient quantum-state preparation and characterization**. The ADAPT-VQE branch asks how to build chemically meaningful ansätze with as few operators as possible, while the graph-state/ML branch asks how to use measurement and classical prediction to extract useful target states from imperfect entangled resources. [1][2][5]
-
-From a research perspective, both directions are about reducing brute-force search in quantum problems: ADAPT-VQE replaces a fixed ansatz with adaptive gradient-based growth, and the graph-state pipeline replaces exhaustive protocol evaluation with learned ranking models. That shared logic makes the repository coherent even though the applications differ. [4][2][5]
-
 ## Main files
 
 ### `adapt_vqe/`
 - `h4closed.py` — main ADAPT-VQE loop for the H4 closed-shell problem, using JAX, custom operator pools, and BFGS optimization. [1]
 - `h4closedfigure.jpg` — convergence figure for energy and wavefunction infidelity. [7]
 
-### `machine_learning/`
+### `mlandgraphstates/`
 - `mlandsectorlengths.py` — end-to-end pipeline for weighted graph states, measurement protocols, sector lengths, and ML ranking. [2]
 - `sectorlengths.py` — exploratory script for sector-length calculations and related state analysis. [6]
 - `graph_state_notebook.ipynb` — notebook for dataset generation, visualization, and model evaluation. [3]
@@ -82,7 +76,7 @@ This workflow performs adaptive operator selection, re-optimizes all variational
 You can either run the notebook interactively or execute the Python pipeline directly. The notebook is useful for inspection and plotting, while `mlandsectorlengths.py` is the reproducible script-style entry point. [2][3][5]
 
 ```bash
-python machine_learning/mlandsectorlengths.py
+python mlandgraphstates/mlandsectorlengths.py
 ```
 
 Typical outputs include protocol datasets, regression/classification metrics, scored protocols, best-per-graph selections, and summary figures saved to an `output/` directory. [2][5]
